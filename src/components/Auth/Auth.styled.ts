@@ -7,6 +7,8 @@ export default styled.div`
     font-size: 24px;
     width: 400px;
     height: 230px;
+    padding-top: 5px;
+    margin-top: 15px;
     
     .auth__input{
         input{

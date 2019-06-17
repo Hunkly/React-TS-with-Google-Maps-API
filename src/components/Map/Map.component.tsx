@@ -54,6 +54,7 @@ export default class WrapMap extends React.Component<{ markersList: SimpleMarker
                             Save all markers
                         </button>
                         <button
+
                             className="map__button"
                             onClick={this.show}>
                             { this.state.isShowed ? 'Hide showed markers' : 'Show saved markers'}

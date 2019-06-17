@@ -26,28 +26,29 @@ export function AuthComponent ({userName, password}: IAuthProps) {
 
     return(
         <StyledAuth>
-            <p>Authorization</p>
-            <form onSubmit={() => {return(<Route exact path="/" render={() => (<Redirect to="/map"/>)}/>)}}>
-                <div className="auth__input">
-                    <input
-                        type="text"
-                        placeholder="Email"
-                        value={userName}
-                        onChange={onEmailChange}
-                    />
-                </div>
-                <div className="auth__input">
-                    <input
-                        type="text"
-                        placeholder="Password"
-                        value={password}
-                        onChange={onPasswordChange}
-                    />
-                </div>
-                <div>
-                    <button className="auth__button" onClick={() => { }}>Sign in </button>
-                </div>
-            </form>
+                <p>Log in</p>
+                <form onSubmit={() => {return(<Route exact path="/" render={() => (<Redirect to="/map"/>)}/>)}}>
+                    <div className="auth__input">
+                        <input
+                            type="text"
+                            placeholder="Email"
+                            value={userName}
+                            onChange={onEmailChange}
+                        />
+                    </div>
+                    <div className="auth__input">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={onPasswordChange}
+
+                        />
+                    </div>
+                    <div>
+                        <button className="auth__button" onClick={() => { }}>Sign in </button>
+                    </div>
+                </form>
         </StyledAuth>
     )
 };

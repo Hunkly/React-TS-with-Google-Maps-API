@@ -3,7 +3,7 @@ import {GoogleMap, Marker, } from "react-google-maps";
 import React from "react";
 import store from '../../store/store';
 import { SimpleMarker } from "../../constants/actionTypes";
-import {fetchHospitals} from './hospital';
+//import {fetchHospitals} from './hospital';
 
 // const google = (window as any).google;
 
@@ -44,10 +44,10 @@ export default class Map extends React.Component<IMapProps, IMapState>{
 
 
     render() {
-        const hospital = fetchHospitals( 46.446904, 30.749284);
+        //const hospital = fetchHospitals( 46.446904, 30.749284);
         console.log('markersList', this.props.markersList);
         console.log('test',this.props.markersList);
-        console.log('HOSPITAL', hospital)
+        //console.log('HOSPITAL', hospital)
         return (
             <div id="map">
             <GoogleMap

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 export default styled.div`
-    width: 50vw;
-    height: 30vw;
+    width: 90vw;
+    height: 35vw;
     
     .container{
         height:100%;
@@ -21,7 +21,7 @@ export default styled.div`
         
         :hover{
         transition: 0.3s;
-        background-color: #7ECF72;
+        background-color: #69B2DB;
         }   
     }
     
