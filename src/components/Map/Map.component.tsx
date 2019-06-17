@@ -30,7 +30,11 @@ export default class WrapMap extends React.Component<{ markersList: SimpleMarker
         const list = JSON.parse(localStorage.getItem('state'));
         saveState(list)
         console.log('SHOW BUTTON', list);
-        this.setState({savedMarkers: list, isShowed: true })
+        this.setState(state => ({
+            savedMarkers: list,
+            //@ts-ignore
+            isShowed: !state.isShowed
+        }))
     }
 
     render(){
@@ -47,12 +51,12 @@ export default class WrapMap extends React.Component<{ markersList: SimpleMarker
                         <button
                             className="map__button"
                             onClick={this.save}>
-                            { this.state.isShowed ? 'Hide showed markers' : 'Save all markers'}
+                            Save all markers
                         </button>
                         <button
                             className="map__button"
                             onClick={this.show}>
-                            Show all saved markers
+                            { this.state.isShowed ? 'Hide showed markers' : 'Show saved markers'}
                         </button>
                     </div>
             </MapStyled>
