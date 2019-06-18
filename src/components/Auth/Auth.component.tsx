@@ -2,7 +2,7 @@ import React from "react";
 import { setPassword, setUserName, setLogged } from "../../store/auth/actions";
 import Store from '../../store/store';
 import StyledAuth from './Auth.styled';
-import {Link, Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 
@@ -24,7 +24,7 @@ export function AuthComponent ({userName, password, isLogged}: IAuthProps) {
     }
 
     function Login(){
-        console.log('PROPS', {userName, password, isLogged});пщш
+        console.log('PROPS', {userName, password, isLogged});
         Store.dispatch(setLogged(true));
         window.location.href = "/main";
     }

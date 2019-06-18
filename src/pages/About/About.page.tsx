@@ -10,7 +10,7 @@ export default function About(){
             <Header children="About me"/>
             <div className="about__text">
                 <p>So hello there. My name is Viktor and this is my simple project. I am 20 y.o. and i was borned in Nova Kakhovka that locates in Kherson region. I love read books by Remarque,
-                listen music by The Neighbourhood, Rammstein, Twenty one Pilots and Ciggarrets after Sex.</p>
+                listen music by The Neighbourhood, Rammstein, Twenty one Pilots and Cigarrets after Sex.</p>
                 <p>My best lover - my guitar.</p>
                 <p>I have a great family and true friends. I am a happy son, brother and uncle.</p>
                 <p>  All my life i have been interested of software engeeniering. I tried too many things such as OOP, making games, etc. But my choiсe fell on web-development.

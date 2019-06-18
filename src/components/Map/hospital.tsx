@@ -1,55 +1,72 @@
-import { google } from 'google-maps';
-import React from 'react';
-import Map from './Map.container';
-import {GoogleMap} from "@react-google-maps/api";
+import React from 'react'
+import {compose, withProps, withHandlers, withState, mapper} from 'recompose'
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { google } from 'google-maps'
 
-export const FETCH_RESTAURANTS = 'FETCH_RESTAURANTS';
-//const google = (window as any).google;
+const MyMapComponent = compose(
+    withProps({
+        googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC4un_JQsqJQTH7rDez7k9SJw7-zDyZ3YA&v=3.exp&libraries=geometry,drawing,places',
+        loadingElement: <div style={{ height: `100%` }} />,
+        containerElement: <div style={{ height: `400px` }} />,
+        mapElement: <div style={{ height: `100%` }} />,
+    }),
+    withScriptjs,
+    withGoogleMap,
+    withState('places', 'updatePlaces', ''),
+    //@ts-ignore
+    withHandlers(() => {
+        const refs = {
+            map: undefined,
+        };
 
-interface IHospitalProps {
-    coords: [
-        {
-            lat: number,
-            lng: number
+        return {
+            //@ts-ignore
+            onMapMounted: () => (ref) => {
+                refs.map = ref
+            },
+            fetchPlaces: ({ updatePlaces }) => {
+                let places;
+                //@ts-ignore
+                const bounds = refs.map.getBounds();
+                //@ts-ignore
+                const service = new google.maps.places.PlacesService(refs.map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
+                const request = {
+                    bounds: bounds,
+                    type: 'hotel'
+                };
+                service.nearbySearch(request, (results, status) => {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        console.log(results);
+                        updatePlaces(results);
+                    }
+                })
+            }
         }
-    ]
-}
-
-
-export function fetchHospitals(lat: any, lng: any)  {
-    var pyrmont = new google.maps.LatLng(lat,lng);
-
-     let map = new google.maps.Map(document.getElementById('map'), {
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        center: pyrmont,
-        zoom: 15
-    });
-
-    // Create request parametres
-    var request = {
-        location: pyrmont,
-        radius: 500,
-        type: 'hospital'
-};
-
-    // Call the nearby search using the parametres
-    let service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callback);
-
-
-    return(
-        <div id="map">
-        </div>
+    }),
+)((props) => {
+    return (
+        <GoogleMap
+            //@ts-ignore
+            onTilesLoaded={props.fetchPlaces}
+            //@ts-ignore
+            ref={props.children.onMapMounted}
+            //@ts-ignore
+            onBoundsChanged={props.children.fetchPlaces}
+            defaultZoom={8}
+            defaultCenter={{lat: 46.446904, lng: 30.749284}}
+        >
+            //@ts-ignore
+            {props.children.places && props.children.places.map((place, i) =>
+                <Marker key={i} position={{ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }} />
+            )}
+        </GoogleMap>
     )
-}
+});
 
-// Asynchronous marker creation at returned locations
-function callback(results: google.maps.places.PlaceResult[], status: google.maps.places.PlacesServiceStatus) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-            //var place = results[i];
-            console.log('HOSPITAL', results[i])
-            // createMarker(results[i]);
-        }
+export default class MyFancyComponent extends React.PureComponent {
+    render() {
+        return (
+            <MyMapComponent />
+        )
     }
 }
