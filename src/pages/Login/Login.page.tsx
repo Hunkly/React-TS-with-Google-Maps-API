@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
-import {AuthComponent} from "../../components/Auth/Auth.component";
+import Auth from "../../components/Auth/Auth";
 import LoginStyled from './Login.styled';
 
 export default function LoginPage(){
@@ -9,7 +9,7 @@ export default function LoginPage(){
         <LoginStyled>
             <Header children="Authorization" />
             <div className="login__auth">
-                <AuthComponent />
+                <Auth />
             </div>
         </LoginStyled>
     )

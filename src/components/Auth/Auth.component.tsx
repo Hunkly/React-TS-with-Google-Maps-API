@@ -1,19 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
-import { setPassword, setUserName } from "../../store/auth/actions";
-import { AppState } from "../../store/reducers";
+import { setPassword, setUserName, setLogged } from "../../store/auth/actions";
 import Store from '../../store/store';
 import StyledAuth from './Auth.styled';
-import { Route } from "react-router-dom";
+import {Link, Route} from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 
 interface IAuthProps{
     userName?: string,
     password?: string,
+    isLogged?: boolean
 }
 
-export function AuthComponent ({userName, password}: IAuthProps) {
+export function AuthComponent ({userName, password, isLogged}: IAuthProps) {
 
     function onEmailChange(event: React.ChangeEvent<HTMLInputElement>){
         Store.dispatch(setUserName(event.target.value));
@@ -22,6 +21,12 @@ export function AuthComponent ({userName, password}: IAuthProps) {
 
     function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>){
         Store.dispatch(setPassword(event.target.value));
+    }
+
+    function Login(){
+        console.log('PROPS', {userName, password, isLogged});пщш
+        Store.dispatch(setLogged(true));
+        window.location.href = "/main";
     }
 
     return(
@@ -42,27 +47,13 @@ export function AuthComponent ({userName, password}: IAuthProps) {
                             placeholder="Password"
                             value={password}
                             onChange={onPasswordChange}
-
                         />
                     </div>
-                    <div>
-                        <button className="auth__button" onClick={() => { }}>Sign in </button>
-                    </div>
                 </form>
+            <div>
+                <button className="auth__button" onClick={Login}>Sign in</button>
+            </div>
         </StyledAuth>
     )
-};
+}
 
-const mapStateToProps = (state: AppState) => {
-    return {
-        userName: state.Auth.userName,
-        password: state.Auth.password
-    };
-};
-
-// const mapDispatchToProps = {
-//         setUserName: setUserName,
-//         setPassword: setPassword
-// };
-
-export default connect(mapStateToProps, null)(AuthComponent);

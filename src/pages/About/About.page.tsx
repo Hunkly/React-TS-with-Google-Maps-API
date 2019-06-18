@@ -17,7 +17,10 @@ export default function About(){
                     You can ask me why but i won't have give you a objective answer. I feel in myself that web-development is what i need and what i can do.</p>
             </div>
             <div className="about__photo">
-                <img src={image} />
+                <img
+                    src={image}
+                    alt="Me"
+                />
                 <p>Just me ;)</p>
             </div>
         </AboutStyled>

@@ -1,4 +1,4 @@
-import  { ADD_USER_NAME, ADD_PASSWORD, UserLoginAction } from "../../constants/actionTypes";
+import {ADD_USER_NAME, ADD_PASSWORD, UserLoginAction, LOGIN_USER} from "../../constants/actionTypes";
 
 
 export function setUserName(userName: string): UserLoginAction {
@@ -13,5 +13,12 @@ export function setPassword(password: string): UserLoginAction {
     return {
         type: ADD_PASSWORD,
         payload: password
+    }
+}
+
+export function setLogged(isLogged: boolean): UserLoginAction {
+    return {
+        type: LOGIN_USER,
+        logged: isLogged
     }
 }
