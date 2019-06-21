@@ -1,12 +1,13 @@
 import {ADD_MARKER, CLEAR_MARKER_LIST, MarkerAction, MarkersState} from "../../constants/actionTypes";
 
 const initialState: MarkersState = {
-    markers: [
-        {
+    markers: [{
+        id: 1,
+        coordinates: {
             lat: 46.446904,
             lng: 30.749284
         }
-    ]
+    }]
 }
 
 export default function markers(state = initialState, action: MarkerAction): MarkersState {

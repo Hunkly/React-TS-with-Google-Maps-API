@@ -5,11 +5,11 @@ import { setMarker } from "../../store/map/actions";
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
 import { SimpleMarker } from "../../constants/actionTypes";
 import { saveState } from "../../store/localStorage";
-import {AppState} from "../../store/reducers";
-import {connect} from "react-redux";
+import { AppState } from "../../store/reducers";
+import { connect } from "react-redux";
 
 interface IMapState {
-    coordinates: SimpleMarker
+    marker: SimpleMarker
 }
 
 interface IMapProps{
@@ -29,24 +29,32 @@ export class Map extends React.Component<IMapProps, IMapState>{
     constructor(props: IMapProps){
         super(props);
         this.state = {
-            coordinates: {
-                lat: 0,
-                lng: 0
+            marker: {
+                id: 0,
+                coordinates: {
+                    lat: 0,
+                    lng: 0
+                }
             }
         };
         this.addMarker = this.addMarker.bind(this);
     }
 
+    nextMarkerId = 1;
+
     addMarker(event: google.maps.MouseEvent){
         this.setState(
             {
-                coordinates: {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
+                marker: {
+                    id: this.nextMarkerId++,
+                    coordinates: {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng()
+                    }
                 }
             }
         );
-        store.dispatch(setMarker({lat: this.state.coordinates.lat, lng: this.state.coordinates.lng}));
+        store.dispatch(setMarker({id: this.nextMarkerId, coordinates: {lat: this.state.marker.coordinates.lat, lng: this.state.marker.coordinates.lng}}));
     }
 
     render() {
@@ -61,9 +69,12 @@ export class Map extends React.Component<IMapProps, IMapState>{
                 >
                     {this.props.markerList.map(coords =>
                         <Marker
+                            key = {
+                                coords.id
+                            }
                             position={{
-                                lat: coords.lat,
-                                lng: coords.lng
+                                lat: coords.coordinates.lat,
+                                lng: coords.coordinates.lng
                             }}
                         />
                     )}
@@ -111,7 +122,9 @@ export class WrapMap extends React.Component<IWrappedMapProps,IWrappedMapState>{
                     containerElement={<div className="container"/>}
                     mapElement={<div className="container"/>}
                 />
-                <div className="map__navigation">
+                <div
+                    className="map__navigation"
+                >
                     <button
                         className="map__button"
                         onClick={this.save}

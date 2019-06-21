@@ -22,8 +22,11 @@ interface LoginUser{
 export type UserLoginAction = AddUserNameAction | AddPasswordAction | LoginUser;
 
 export interface SimpleMarker {
-    lat: number,
-    lng: number
+    id: number,
+    coordinates: {
+        lat: number,
+        lng: number
+    }
 }
 
 export interface MarkersState {
