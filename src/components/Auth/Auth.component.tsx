@@ -1,10 +1,10 @@
 import React from "react";
-import { setPassword, setUserName, setLogged } from "../../store/auth/actions";
-import Store from '../../store/store';
+import store from '../../store/store';
 import StyledAuth from './Auth.styled';
-import { Route } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-
+import { setPassword, setUserName, setLogged } from "../../store/auth/actions";
+import { Route, Redirect } from "react-router-dom";
+import {AppState} from "../../store/reducers";
+import {connect} from "react-redux";
 
 interface IAuthProps{
     userName?: string,
@@ -15,25 +15,43 @@ interface IAuthProps{
 export function AuthComponent ({userName, password, isLogged}: IAuthProps) {
 
     function onEmailChange(event: React.ChangeEvent<HTMLInputElement>){
-        Store.dispatch(setUserName(event.target.value));
-
+        store.dispatch(setUserName(event.target.value));
     }
 
     function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>){
-        Store.dispatch(setPassword(event.target.value));
+        store.dispatch(setPassword(event.target.value));
     }
 
     function Login(){
         console.log('PROPS', {userName, password, isLogged});
-        Store.dispatch(setLogged(true));
+        store.dispatch(setLogged(true));
         window.location.href = "/main";
     }
 
     return(
         <StyledAuth>
                 <p>Log in</p>
-                <form onSubmit={() => {return(<Route exact path="/" render={() => (<Redirect to="/map"/>)}/>)}}>
-                    <div className="auth__input">
+                <form
+                    onSubmit={
+                        () => {
+                            return(
+                                <Route
+                                    exact path="/"
+                                    render={
+                                        () => (
+                                            <Redirect
+                                                to="/map"
+                                            />
+                                        )
+                                    }
+                                />
+                            )
+                        }
+                    }
+                >
+                    <div
+                        className="auth__input"
+                    >
                         <input
                             type="text"
                             placeholder="Email"
@@ -41,7 +59,9 @@ export function AuthComponent ({userName, password, isLogged}: IAuthProps) {
                             onChange={onEmailChange}
                         />
                     </div>
-                    <div className="auth__input">
+                    <div
+                        className="auth__input"
+                    >
                         <input
                             type="password"
                             placeholder="Password"
@@ -51,9 +71,23 @@ export function AuthComponent ({userName, password, isLogged}: IAuthProps) {
                     </div>
                 </form>
             <div>
-                <button className="auth__button" onClick={Login}>Sign in</button>
+                <button
+                    className="auth__button"
+                    onClick={Login}
+                >
+                    Sign in
+                </button>
             </div>
         </StyledAuth>
     )
 }
 
+const mapStateToProps = (state: AppState) => {
+    return {
+        userName: state.Auth.userName,
+        password: state.Auth.password,
+        isLogged: state.Auth.isLogged
+    };
+};
+
+export default connect(mapStateToProps, null)(AuthComponent);

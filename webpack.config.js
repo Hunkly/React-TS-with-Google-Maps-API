@@ -45,17 +45,6 @@ const config = {
                 exclude: /node_modules/,
 
             },
-            // {
-            //     test: /\.js?jsx$/,
-            //     include: SRC,
-            //     use: {
-            //         loader: 'babel-loader',
-            //         options: {
-            //             presets: ['es2015', 'react']
-            //         }
-            //     },
-            //     exclude: /node_modules/
-            // },
             {
                 test: /\.less$/,
                 use: ExtractTextPlugin.extract({

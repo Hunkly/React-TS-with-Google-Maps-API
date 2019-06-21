@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/Header';
-import Auth from "../../components/Auth/Auth";
+import Header from '../../components/Header/Header.component';
+import Auth from "../../components/Auth/Auth.component";
 import LoginStyled from './Login.styled';
 
 export default function LoginPage(){

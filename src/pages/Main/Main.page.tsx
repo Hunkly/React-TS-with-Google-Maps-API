@@ -1,7 +1,7 @@
 import React from 'react';
-import Map from '../../components/Map/Map';
+import Map from '../../components/Map/Map.component';
 import MainPageStyled from './Main.styled';
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header.component";
 
 export default function Main(){
     return(

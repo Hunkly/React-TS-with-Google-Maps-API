@@ -4,7 +4,6 @@ import AboutStyled from './About.styled';
 import image from '../../assets/image.jpg';
 
 export default function About(){
-
     return(
         <AboutStyled>
             <Header children="About me"/>
