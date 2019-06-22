@@ -16,6 +16,7 @@ export function setMarker(coords: SimpleMarker): MarkerAction {
 
 export function clearMarkers(){
     return {
-        type: CLEAR_MARKER_LIST
+        type: CLEAR_MARKER_LIST,
+        marker: undefined
     };
 }

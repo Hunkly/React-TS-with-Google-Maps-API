@@ -16,7 +16,8 @@ const rootReducer = (state: any, action: MarkerAction) => {
     if(action.type === CLEAR_MARKER_LIST){
         state = undefined
     }
+    console.log('CLEAR_MARKER_LIST', state);
     return allReducers(state, action);
-}
+};
 
 export type AppState = ReturnType<typeof rootReducer>

@@ -2,17 +2,18 @@ import {ADD_MARKER, CLEAR_MARKER_LIST, MarkerAction, MarkersState} from "../../c
 
 const initialState: MarkersState = {
     markers: [{
-        id: 1,
+        id: 0,
         coordinates: {
             lat: 46.446904,
             lng: 30.749284
         }
     }]
-}
+};
 
 export default function markers(state = initialState, action: MarkerAction): MarkersState {
     switch(action.type) {
         case ADD_MARKER:
+            console.log('ADD_MARKER', state)
             return {
                 markers: [...state.markers, action.marker]
             };
