@@ -1,24 +1,14 @@
-import {ADD_USER_NAME, ADD_PASSWORD, UserLoginAction, LOGIN_USER} from "../../constants/actionTypes";
+import {LOG_USER, UserAction, User} from "../../constants/actionTypes";
 
 
-export function setUserName(userName: string): UserLoginAction {
-    console.log('test action:',userName);
+export function logUser(user: User): UserAction {
+    console.log('test LOG_USER action:', user);
     return {
-        type: ADD_USER_NAME,
-        payload: userName
-    }
-}
-
-export function setPassword(password: string): UserLoginAction {
-    return {
-        type: ADD_PASSWORD,
-        payload: password
-    }
-}
-
-export function setLogged(isLogged: boolean): UserLoginAction {
-    return {
-        type: LOGIN_USER,
-        logged: isLogged
+        type: LOG_USER,
+        user:{
+            userName: user.userName,
+            password: user.password,
+            isLogged: user.isLogged
+        }
     }
 }

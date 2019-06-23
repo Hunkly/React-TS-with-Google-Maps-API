@@ -1,25 +1,29 @@
-export const ADD_USER_NAME = 'ADD_USER_NAME';
-export const ADD_PASSWORD = 'ADD_PASSWORD';
+export const LOG_USER = 'LOG_USER';
 export const ADD_MARKER = 'ADD_MARKER';
 export const CLEAR_MARKER_LIST = 'CLEAR_MARKER_LIST';
-export const LOGIN_USER = 'LOGIN_USER';
+export const REG_USER = 'REG_USER';
 
-interface AddUserNameAction {
-    type: typeof ADD_USER_NAME
-    payload: string
+export interface User {
+    userName: string,
+    password: string,
+    isLogged: boolean
 }
 
-interface AddPasswordAction {
-    type: typeof ADD_PASSWORD
-    payload: string
+export interface UsersState {
+    users: User[]
 }
 
-interface LoginUser{
-    type: typeof LOGIN_USER
-    logged: boolean
+interface LogUserAction {
+    type: typeof LOG_USER
+    user: User
 }
 
-export type UserLoginAction = AddUserNameAction | AddPasswordAction | LoginUser;
+interface RegUserAction {
+    type: typeof REG_USER
+    user: User
+}
+
+export type UserAction = LogUserAction | RegUserAction;
 
 export interface SimpleMarker {
     id: number,

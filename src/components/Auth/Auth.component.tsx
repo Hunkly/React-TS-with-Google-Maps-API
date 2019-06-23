@@ -1,85 +1,91 @@
 import React from "react";
-import store from '../../store/store';
 import StyledAuth from './Auth.styled';
-import { setPassword, setUserName, setLogged } from "../../store/auth/actions";
-import { Route, Redirect } from "react-router-dom";
-import {AppState} from "../../store/reducers";
-import {connect} from "react-redux";
+import { AppState } from "../../store/reducers";
+import { connect } from "react-redux";
+import {logUser} from "../../store/auth/actions";
+import store from '../../store/store';
 
 interface IAuthProps{
-    userName?: string,
-    password?: string,
-    isLogged?: boolean
+    isLogged: boolean
+    userName: string
+    password: string
 }
 
-export function AuthComponent ({userName, password, isLogged}: IAuthProps) {
+interface IAuthState{
+    userName: string,
+    password: string
+}
 
-    function onEmailChange(event: React.ChangeEvent<HTMLInputElement>){
-        store.dispatch(setUserName(event.target.value));
+export class AuthComponent extends React.Component<IAuthProps,IAuthState> {
+    constructor(props: IAuthProps){
+        super(props);
+        this.state = {
+            userName: '',
+            password: ''
+        };
+        this.onEmailChange = this.onEmailChange.bind(this);
+        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.Login = this.Login.bind(this);
     }
 
-    function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>){
-        store.dispatch(setPassword(event.target.value));
+    onEmailChange(event: React.ChangeEvent<HTMLInputElement>){
+        this.setState(
+            {
+                userName: event.target.value
+            }
+        )
     }
 
-    function Login(){
-        console.log('PROPS', {userName, password, isLogged});
-        store.dispatch(setLogged(true));
-        window.location.href = "/main";
+    onPasswordChange(event: React.ChangeEvent<HTMLInputElement>){
+        this.setState(
+            {
+                password: event.target.value
+            }
+        )
     }
 
-    return(
-        <StyledAuth>
-                <p>Log in</p>
-                <form
-                    onSubmit={
-                        () => {
-                            return(
-                                <Route
-                                    exact path="/"
-                                    render={
-                                        () => (
-                                            <Redirect
-                                                to="/map"
-                                            />
-                                        )
-                                    }
-                                />
-                            )
-                        }
-                    }
-                >
-                    <div
-                        className="auth__input"
-                    >
+    Login(event: React.MouseEvent<HTMLButtonElement>){
+        event.preventDefault();
+        if(this.state.userName && this.state.password){
+            store.dispatch(logUser({userName: this.state.userName, password: this.state.password, isLogged: true}));
+            window.location.href = "/main";
+        } else {
+            alert('Please fill the data');
+        }
+        console.log('User: ', this.state);
+    }
+
+    render(){
+        return(
+            <StyledAuth>
+                <p>Login</p>
+                <form>
+                    <div className="auth__input">
                         <input
                             type="text"
                             placeholder="Email"
-                            value={userName}
-                            onChange={onEmailChange}
+                            value={this.state.userName}
+                            onChange={this.onEmailChange}
                         />
                     </div>
-                    <div
-                        className="auth__input"
-                    >
+                    <div className="auth__input">
                         <input
                             type="password"
                             placeholder="Password"
-                            value={password}
-                            onChange={onPasswordChange}
+                            value={this.state.password}
+                            onChange={this.onPasswordChange}
                         />
                     </div>
+                    <button
+                        className="auth__button"
+                        onClick={this.Login}
+                    >
+                        Sign in
+                    </button>
                 </form>
-            <div>
-                <button
-                    className="auth__button"
-                    onClick={Login}
-                >
-                    Sign in
-                </button>
-            </div>
-        </StyledAuth>
-    )
+            </StyledAuth>
+        )
+    }
 }
 
 const mapStateToProps = (state: AppState) => {
