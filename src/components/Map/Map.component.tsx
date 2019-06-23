@@ -3,7 +3,7 @@ import store from '../../store/store';
 import MapStyled from './Map.styled';
 import { clearMarkers, setMarker}  from "../../store/map/actions";
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
-import {MarkersState, SimpleMarker} from "../../constants/actionTypes";
+import { SimpleMarker} from "../../constants/actionTypes";
 import { saveState } from "../../store/localStorage";
 import { AppState } from "../../store/reducers";
 import { connect } from "react-redux";
