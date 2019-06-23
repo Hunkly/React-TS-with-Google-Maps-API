@@ -3,7 +3,7 @@ import store from '../../store/store';
 import MapStyled from './Map.styled';
 import { clearMarkers, setMarker}  from "../../store/map/actions";
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
-import { SimpleMarker } from "../../constants/actionTypes";
+import {MarkersState, SimpleMarker} from "../../constants/actionTypes";
 import { saveState } from "../../store/localStorage";
 import { AppState } from "../../store/reducers";
 import { connect } from "react-redux";
@@ -19,11 +19,11 @@ interface IMapProps{
 }
 
 interface IWrappedMapState {
-    savedMarkers: [],
+    savedMarkers: SimpleMarker[],
     selectedValue: string,
     isMarkersShowed: boolean,
     isPlacedMarkersShowed: boolean,
-    placeMarker: SimpleMarker[]
+    placeMarkers: SimpleMarker[]
 }
 
 interface IWrappedMapProps{
@@ -76,7 +76,7 @@ export class Map extends React.Component<IMapProps, IMapState>{
                     defaultCenter={{lat: 46.446904, lng: 30.749284}}
                     onClick={this.addMarker}
                 >
-                    {this.props.markerList.map(coords =>
+                    {this.props.markerList.map((coords: SimpleMarker) =>
                         <Marker
                             key = {
                                 coords.id
@@ -103,7 +103,7 @@ export class WrapMap extends React.Component<IWrappedMapProps,IWrappedMapState>{
             selectedValue: 'school',
             isMarkersShowed: false,
             isPlacedMarkersShowed: false,
-            placeMarker:[
+            placeMarkers:[
                 {
                     id: 0,
                     coordinates:{
@@ -126,7 +126,7 @@ export class WrapMap extends React.Component<IWrappedMapProps,IWrappedMapState>{
     }
 
     show(){
-        const list = JSON.parse(localStorage.getItem('state') || '{}');
+        const list: SimpleMarker[] = JSON.parse(localStorage.getItem('state') || '{}');
             saveState(list);
             console.log('SHOW BUTTON', list);
             this.setState((state: IWrappedMapState) => ({
@@ -155,7 +155,7 @@ export class WrapMap extends React.Component<IWrappedMapProps,IWrappedMapState>{
             center: center,
             zoom: 15
         });
-        let options = {
+        let options: google.maps.places.PlaceSearchRequest = {
             location: center,
             radius: 1500,
             type: this.state.selectedValue
