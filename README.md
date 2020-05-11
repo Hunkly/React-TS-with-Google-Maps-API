@@ -5,9 +5,7 @@ Hi and welcome. This is simple React project that used a Google Maps API and Rea
 ## Getting started
 
 1. Download project and install the packages by `npm install`.
-2. Get your calendar id in your calendar properties.
-3. Open `App.js` and set the calendarID variable.
-4. Run `npm start`.
+2. Run `npm start`.
 
 ## Author 
 Viktor Sapozhnik (Hunkly).
